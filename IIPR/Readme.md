@@ -11,31 +11,28 @@ It has many functions which enable various utilities like authentication of user
 
 ## Various functions of the IIPR:
 
-* 1.	Authenticate User - IIPR has a module that invokes the authentication service to authenticate the user to access data on IIPR. In build encryption is used to store passwords
-* 2.	Get Metadata - IIPR has a function that calls the web service to get metadata information about an IIP view/table. E.g. location of data on HDFS
-* 3.	Register view - Registers data on HDFS as a view/table in IIP by calling the view registration web service. 
-* 4.	Access the data – This allows the user to fetch the tables from IIP workspace. This can be done 
-	a.	By using standard Spark SQL queries leveraging standard JDBC connectors. 
-	b.	By copying the data from HDFS location of the table to local machine
-	c.	By reading the file directly from HDFS location of the table
+* Authenticate User - IIPR has a module that invokes the authentication service to authenticate the user to access data on IIPR. In build encryption is used to store passwords
+* Get Metadata - IIPR has a function that calls the web service to get metadata information about an IIP view/table. E.g. location of data on HDFS
+* Register view - Registers data on HDFS as a view/table in IIP by calling the view registration web service. 
+* Access the data – This allows the user to fetch the tables from IIP workspace. This can be done 
+	** a.	By using standard Spark SQL queries leveraging standard JDBC connectors. 
+	** b.	By copying the data from HDFS location of the table to local machine
+	** c.	By reading the file directly from HDFS location of the table
 
-* 5.	Upload to HDFS  - it allows the user to upload the R data as csv files to HDFS
+* Upload to HDFS  - it allows the user to upload the R data as csv files to HDFS
 
 ## Installation:
 
 Get the latest stable development version from github:
 
 ```r
-# Use `IIPR` to install directly from github
-library(IIPR)
+
 install_github("Rconnector/IIPR")
 ```
     
 ## Example:
 
 ```r
-
-
 library(IIPR)
 IIP.init("username")
 IIP.uploadTable(dataSource = "testDataSource", workspaceName = "testWorkspace",hdfsDelimiter = ",", dataFrame= DataFrame object, tableName= "R_Table", fileType = "csv")
