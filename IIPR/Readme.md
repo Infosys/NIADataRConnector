@@ -10,7 +10,7 @@ It has many functions which enable various utilities like authentication of user
  
 
 
-## Various functions of the IIPR:
+## Various functions of the IIPR
 
  * ***Authenticate User*** - IIPR has a module that invokes the authentication service to authenticate the user to access data on IIPR. In build encryption is used to store passwords
  * ***Get Metadata*** - IIPR has a function that calls the web service to get metadata information about an IIP view/table. E.g. location of data on HDFS
@@ -21,16 +21,15 @@ It has many functions which enable various utilities like authentication of user
     * By reading the file directly from HDFS location of the table
  * ***Upload to HDFS***  - it allows the user to upload the R data as csv files to HDFS
 
-## Installation:
+## Installation
 
 Get the latest stable development version from github:
 
 ```r
-
 install_github("Rconnector/IIPR")
 ```
     
-## Example:
+## Example
 
 ```r
 library(IIPR)
