@@ -6,7 +6,9 @@ IIPR Package
 ## Introduction
 
 The IIPR package has been built to allow data scientists and analysts access views created in IIP. 
-It has many functions which enable various utilities like authentication of user, fetching of data & metadata from IIP and pushing data to HDFS and registering it is views/tables in IIP. IIPR Packages are collections of R functions, data, and compiled code in a well-defined format. The directory where packages are stored is called the R-library. R comes with a standard set of packages. Many useful R function come in packages, To install an R package, open an R session and type at the command line
+It has many functions which enable various utilities like authentication of user, fetching of data & metadata from IIP and pushing data to HDFS and registering it is views/tables in IIP. 
+
+
  
 
 
