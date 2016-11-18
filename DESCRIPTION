@@ -2,12 +2,11 @@ Package: IIPR
 Type: Package
 Title: the IIPR package has been built to allow data scientists and
         analysts access views created in IIP
-Version: 1.2.4
-Date: 2016-06-29
+Version: 1.2.4.2
+Date: 2016-10-17
 Author: Kiran Kaipa, Poorva Agrawal
-Maintainer: <poorva_agrawal@infosys.com>
-Description: It has many functions which enable various utilities like authentication of user, 
-    fetching of data & metadata from IIP and pushing data to HDFS and registering it is views/tables in IIP. 
-License: Apache License, Version 2.0
+Maintainer: Who to complain to <yourfault@somewhere.net>
+Description: More about what it does (maybe more than one line)
+License: What license is it under?
 NeedsCompilation: no
-Packaged: 2016-06-29 11:18:23 UTC; iipadmin
+Packaged: 2016-10-17 06:23:23 UTC; iipadmin

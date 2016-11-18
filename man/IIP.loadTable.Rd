@@ -8,7 +8,7 @@ Upload the file to IIP
 upload the given file to a table in a workspace in IIP using IIP webservice
 }
 \usage{
-IIP.loadTable(dataSource, workspaceName, columns, dataType, tableName, hdfsDelimiter, filepath, fileType)
+IIP.loadTable(dataSource, workspaceName, columns, dataType, tableName, hdfsDelimiter, filepath, fileType,role)
 }
 
 \arguments{
@@ -36,6 +36,9 @@ IIP.loadTable(dataSource, workspaceName, columns, dataType, tableName, hdfsDelim
   \item{fileType}{
  Type of table/file (default is csv)
 }
+\item{role}{
+user role 
+}
 }
 \details{
 
@@ -60,5 +63,5 @@ Poorva_Agrawal@infosys.com
 
 }
 \examples{
-#IIP.loadTable(dataSource="DataSourceName", workspaceName="WorkspaceName", columns=c("Column1, Column2, Column3"), dataType=c("String, String, String"), tableName="TableName", hdfsDelimiter=",", fileType="csv", filepath = "ExactFileLocation")
+#IIP.loadTable(dataSource="DataSourceName", workspaceName="WorkspaceName", columns=c("Column1, Column2, Column3"), dataType=c("String, String, String"), tableName="TableName", hdfsDelimiter=",", fileType="csv", filepath = "ExactFileLocation", role = \"admin\")
 }

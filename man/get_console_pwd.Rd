@@ -1,5 +1,5 @@
-\name{get_password}
-\alias{get_password}
+\name{get_console_pwd}
+\alias{get_console_pwd}
 
 \title{
 Get the password from user
@@ -8,9 +8,8 @@ Get the password from user
 This function allows to get the masked password from user on console.
 }
 \usage{
-get_password()
+get_console_pwd()
 }
-
 \details{
 
 }
@@ -31,6 +30,5 @@ Prasanna_Teli@infosys.com
 
 }
 \examples{
-#get_password()
+#get_console_pwd()
 }
-
