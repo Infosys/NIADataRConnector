@@ -1,5 +1,5 @@
-\name{mask}
-\alias{mask}
+\name{get_ui_pass}
+\alias{get_ui_pass}
 
 \title{
 Input Password
@@ -8,7 +8,7 @@ Input Password
 Function to enter the password in a masked format by using a Windows Pop-up
 }
 \usage{
-mask()
+get_ui_pass()
 }
 
 \details{
@@ -33,5 +33,5 @@ Prasanna_Teli@infosys.com
 
 }
 \examples{
-#mask()
+#get_ui_pass()
 }

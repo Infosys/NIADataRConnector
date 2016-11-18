@@ -8,7 +8,7 @@ create the json object
 create the json object using input parameters
 }
 \usage{
-createUploadTableJson(dataSource, workspaceName, columns, dataType, hdfsDelimiter, filepath, tableName, fileType)
+createUploadTableJson(dataSource, workspaceName, columns, dataType, hdfsDelimiter, filepath, tableName, fileType, role)
 }
 \arguments{
   \item{dataSource}{
@@ -37,6 +37,9 @@ name of the table to be uploaded
   \item{fileType}{
 type of table/file (default is csv)
 }
+\item{role}{
+user role 
+}
 }
 \details{
 
@@ -61,7 +64,7 @@ Poorva_Agrawal@infosys.com
 }
 \examples{
 
-"createUploadTableJson(dataSource=\"DataSourceName\", workspaceName=\"WorkspaceName\", columns=c(\"Column1,Column2,Column3\"), dataType=c(\"String,String,String\"), hdfsDelimiter=\",\", filepath=\"FilePath\", tableName=\"TableName\", fileType=\"csv\")"
+"createUploadTableJson(dataSource=\"DataSourceName\", workspaceName=\"WorkspaceName\", columns=c(\"Column1,Column2,Column3\"), dataType=c(\"String,String,String\"), hdfsDelimiter=\",\", filepath=\"FilePath\", tableName=\"TableName\", fileType=\"csv\", role = \"admin\")"
 
 }
 
