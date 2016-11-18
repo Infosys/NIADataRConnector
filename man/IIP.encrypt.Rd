@@ -5,21 +5,15 @@
 Encrypt passwords
 }
 \description{
-Function to encrypt passwords using key(RSA 2048bits) for encryption
+Function to encrypt passwords using IIP jar
 }
 \usage{
-IIP.encrypt(pwd = NULL, pwdFile = NULL, encryptedFilePath = NULL)
+IIP.encrypt(password)
 }
 
 \arguments{
-  \item{pwd}{
+  \item{password}{
 Plaintext Original Password
-}
-  \item{pwdFile}{
-Location of the file containing plaintext password. [Optional if the user is entering the password manually]
-}
-  \item{encryptedFilePath}{
-Location of the file where the encrypted password should be stored.
 }
 }
 \details{
@@ -32,7 +26,7 @@ Location of the file where the encrypted password should be stored.
 
 }
 \author{
-Prasanna_Teli@infosys.com
+poorva_agrawal@infosys.com, Prasanna_Teli@infosys.com
 }
 \note{
 
@@ -42,6 +36,6 @@ Prasanna_Teli@infosys.com
 
 }
 \examples{
-#IIP.encrypt()
+#IIP.encrypt(password)
 }
 

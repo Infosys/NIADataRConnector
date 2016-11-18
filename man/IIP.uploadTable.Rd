@@ -8,7 +8,7 @@ Upload the data frame to IIP
 upload the given data frame to a table in a workspace in IIP using IIP webservice
 }
 \usage{
-IIP.uploadTable(dataSource, workspaceName, hdfsDelimiter = ",", dataFrame, tableName, fileType = "csv")
+IIP.uploadTable(dataSource, workspaceName, hdfsDelimiter = ",", dataFrame, tableName, fileType = "csv", append = F, role)
 }
 
 \arguments{
@@ -31,6 +31,12 @@ name of the table to be uploaded
 }
   \item{fileType}{
   type of table/file (default is csv)
+}
+ \item{append}{
+  whether the table is to be appended or is to be created (default is csv)
+}
+ \item{role}{
+user role
 }
 }
 \details{
@@ -56,6 +62,6 @@ Poorva_Agrawal@infosys.com
 
 }
 \examples{
-#IIP.uploadTable(dataSource="DataSourceName", workspaceName="WorkspaceName", hdfsDelimiter = ",", dataFrame=DataFrameObject, tableName="TableName", fileType = "csv")
+#IIP.uploadTable(dataSource="DataSourceName", workspaceName="WorkspaceName", hdfsDelimiter = ",", dataFrame=DataFrameObject, tableName="TableName", fileType = "csv", append = F, role ="admin")
 
 }

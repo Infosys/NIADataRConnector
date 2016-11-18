@@ -5,18 +5,15 @@
 Decrypt password
 }
 \description{
-Utility to decrypt the password which the user has entered and is stored in encrypted format using key(RSA 2048bits).
+Utility to decrypt the encrypted password using IIP jar
 }
 \usage{
-IIP.decrypt(encryptedPwdFile = NULL, privateKeyFile = NULL)
+IIP.decrypt(encryptedPWD)
 }
 
 \arguments{
-  \item{encryptedPwdFile}{
-Location of the Encrypted Password File.
-}
-  \item{privateKeyFile}{
-Location of the Private Key file which stores the RSA Private Key.
+  \item{encryptedPWD}{
+The encrypted password
 }
 }
 \details{
@@ -29,7 +26,7 @@ Location of the Private Key file which stores the RSA Private Key.
 
 }
 \author{
-Prasanna_Teli@infosys.com
+poorva_agrawal@infosys.com, Prasanna_Teli@infosys.com
 }
 \note{
 
@@ -40,6 +37,6 @@ Prasanna_Teli@infosys.com
 
 }
 \examples{
-#IIP.decrypt( encryptedPwdFile = "/home/test")
+#IIP.decrypt(encryptedPwd)
 
 }

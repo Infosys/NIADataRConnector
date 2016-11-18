@@ -13,7 +13,7 @@ IIP.JDBCConnection(datasource = "iip")
 \arguments{
   \item{datasource}{
 Specify the data source to pull the data from. 
-Takes in the type as "iip", "hive", "mysql"
+Takes in the type as "iip", "hive", "mysql", "postgres"
 }
 }
 \details{
