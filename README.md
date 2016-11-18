@@ -28,7 +28,7 @@ It has many functions which enable various utilities like authentication of user
 Get the latest stable development version from github:
 
 ```r
-install_github("Rconnector/IIPR")
+install_github("Infosys/IIPR")
 ```
     
 ## Example
