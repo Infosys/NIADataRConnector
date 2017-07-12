@@ -14,7 +14,7 @@ It has many functions which enable various utilities like authentication of user
 
 ## Various functions of the NIADataRConnector
 
- * ***Authenticate User*** - NIADataRConnector has a module that invokes the authentication service to authenticate the user to access data on IIPR. In build encryption is used to store passwords
+ * ***Authenticate User*** - NIADataRConnector has a module that invokes the authentication service to authenticate the user to access data on NIADataRConnector. In build encryption is used to store passwords
  * ***Get Metadata*** - NIADataRConnector has a function that calls the web service to get metadata information about an IIP view/table. E.g. location of data on HDFS
  * ***Register view*** - Registers data on HDFS as a view/table in IIP by calling the view registration web service. 
  * ***Access the data*** – This allows the user to fetch the tables from IIP workspace. This can be done
