@@ -12,9 +12,9 @@ the IIPR package has been built to allow data scientists and analysts access vie
 \tabular{ll}{
 Package: \tab IIPR\cr
 Type: \tab Package\cr
-Version: \tab 2.0\cr
-Date: \tab 2016-09-26\cr
-License: \tab What license is it under?\cr
+Version: \tab 2.3\cr
+Date: \tab 2017-01-25\cr
+License: \tab Apache License, Version 2.0\cr
 }
 
 }
