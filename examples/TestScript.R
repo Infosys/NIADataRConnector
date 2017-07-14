@@ -1,4 +1,4 @@
-library(IIPR)
+library(NIADataRConnector)
 
 ####### There are 3 ways to initialize 
 
