@@ -332,3 +332,23 @@ casConnector<-function(json, functionCall)
   return(response)
   
 }
+
+IIP.fetchLimitedRows<-function(tableName,datasource="iip")
+{
+  if(datasource=="hive"){
+    connection<-IIP.JDBCConnection("hive")
+    dbSendUpdate(connection,"set  hive.resultset.use.unique.column.names=false")
+    res<-dbGetQuery(connection, paste("SELECT * FROM",tableName,"TABLESAMPLE(",Sys.getenv("ROW_LIMIT"),"ROWS)"))
+    dbDisconnect(connection)
+    #colnames(res)<-sub(colnames(res), pattern = paste0(tableName,"\\.*"), replacement = "")
+  }
+  else if(datasource=="iip"){
+    connection<-IIP.JDBCConnection()
+    res<-dbGetQuery(connection, paste("SELECT * FROM",tableName,"TABLESAMPLE(",Sys.getenv("ROW_LIMIT"),"ROWS)"))
+    dbDisconnect(connection)
+  }
+  else{
+    res="Invalid datasource"
+  }
+  res
+}

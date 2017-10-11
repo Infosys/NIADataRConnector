@@ -19,7 +19,12 @@ dbGetQuery(hive_con, "show tables")
 sql_con<-IIP.JDBCConnection("mysql")
 dbGetQuery(sql_con, "show tables")
 
+
 IIP.getTableFilePath("tableName","ds-name","ws-name")
+
+IIP.fetchLimitedRows("tableName","hive")
+IIP.fetchLimitedRows("tableName","iip")
+IIP.fetchLimitedRows("tableName")
 
 data = iris
 IIP.uploadTable(dataSource = "ds-name",workspaceName = "ws-name",hdfsDelimiter=",",dataFrame=iris,tableName="iris", fileType="csv", append = F, role ="admin")
