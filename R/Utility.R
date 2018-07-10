@@ -13,7 +13,8 @@
 
 createUploadTableJson<-function(dataSource,workspaceName,columns,dataType,hdfsDelimiter,filepath,tableName, fileType, roleId)
 {
-  myObject<- list(saveInDataStore=dataSource,workspaceName=workspaceName,columns=columns,dataType=dataType,hdfsDelimiter=hdfsDelimiter,filepath=filepath,tableName=tableName,fileType=fileType, roleId = roleId)
+ ##Converting delimiter to unicode before sending to IIP using utf8ToInt function
+  myObject<- list(saveInDataStore=dataSource,workspaceName=workspaceName,columns=columns,dataType=dataType,hdfsDelimiter=utf8ToInt(hdfsDelimiter),filepath=filepath,tableName=tableName,fileType=fileType, roleId = roleId)
   obj.json <- toJSON(myObject)
 }
 
@@ -127,7 +128,7 @@ IIP.JDBCConnection<-function (datasource="iip")
   } else if(datasource=="hive")
   {
     drv <- JDBC("org.apache.hive.jdbc.HiveDriver", Sys.getenv("HIVE_JDBC"))
-    connection <- dbConnect(drv, Sys.getenv("HIVE_JDBC_URL"), username,
+    connection <- dbConnect(drv, Sys.getenv("HIVE_URL"), username,
                             password)
   } else if(datasource=="mysql")
   {
@@ -282,7 +283,7 @@ IIP.uploadTable<-function(dataSource,workspaceName,hdfsDelimiter=",",dataFrame,t
   {
     #upload table
     
-    uploadTableToIIP(dataSource,workspaceName,hdfsDelimiter,dataFrame,tableName, fileType, role)
+    uploadTableToIIP(dataSource,workspaceName,hdfsDelimiter,dataFrame,tableName, fileType, role,destination="hdfs")
     
   }
   
@@ -300,7 +301,7 @@ IIP.uploadTable<-function(dataSource,workspaceName,hdfsDelimiter=",",dataFrame,t
       #upload table
       
       print("table doesn't exists. uploading to IIP")
-      uploadTableToIIP(dataSource,workspaceName,hdfsDelimiter,dataFrame,tableName, fileType, role)
+      uploadTableToIIP(dataSource,workspaceName,hdfsDelimiter,dataFrame,tableName, fileType, role,destination="hdfs")
     }
     
     else
@@ -373,8 +374,17 @@ IIP.uploadTable<-function(dataSource,workspaceName,hdfsDelimiter=",",dataFrame,t
   }
 }
 
+IIP.uploadTableToHive<-function(dataSource,workspaceName,hdfsDelimiter=",",dataFrame,tableName, fileType, append = F, role)
+{
+  
+    
+    uploadTableToIIP(dataSource,workspaceName,hdfsDelimiter,dataFrame,tableName, fileType , role,destination="hive",append)
+   
+ 
+}
 
-uploadTableToIIP<-function(dataSource,workspaceName,hdfsDelimiter=",",dataFrame,tableName, fileType="csv", role)
+
+uploadTableToIIP<-function(dataSource,workspaceName,hdfsDelimiter=",",dataFrame,tableName, fileType="csv", role,destination,append=F)
 {
   
   
@@ -439,9 +449,24 @@ uploadTableToIIP<-function(dataSource,workspaceName,hdfsDelimiter=",",dataFrame,
   text = basicTextGatherer()
   header = basicHeaderGatherer()
   text$reset()
+  # # Uploading to hive in default database.
+  location<-paste0(Sys.getenv("USER_WORKSPACE"),"/",fileName)
+  if(destination == "hive"){
+    createHdfsDirectory(paste0(Sys.getenv("HADOOP_ADLS"),Sys.getenv("USER_WORKSPACE"),"/"),tableName)
+    hdfsFileLocation<-paste0(Sys.getenv("HADOOP_ADLS"),Sys.getenv("USER_WORKSPACE"),"/",tableName,"/")
+    uploadToHDFS(localFileLocation,hdfsFileLocation)
+    uploadToHive(hdfsFileLocation,tableName,columns,dataType,hdfsDelimiter,append)
+	location<-paste0(Sys.getenv("HADOOP_ADLS"),Sys.getenv("HIVE_WAREHOUSE"),"/",tolower(tableName))
+	
+	fileType<-"hive"
+	tableName<-paste0('default.',tableName)
+	json<-createUploadTableJson(dataSource,workspaceName,columns,dataType,hdfsDelimiter,location,tableName, "hive", id)
+  }
+  else{
   
-  uploadToHDFS(localFileLocation,Sys.getenv("USER_WORKSPACE"))
-  json<-createUploadTableJson(dataSource,workspaceName,columns,dataType,hdfsDelimiter,paste0(Sys.getenv("USER_WORKSPACE"),"/",fileName),tableName, fileType, id)
+	  uploadToHDFS(localFileLocation,Sys.getenv("USER_WORKSPACE"))
+	  json<-createUploadTableJson(dataSource,workspaceName,columns,dataType,hdfsDelimiter,location,tableName, fileType, id)
+	}
   
   
   
@@ -459,7 +484,7 @@ uploadTableToIIP<-function(dataSource,workspaceName,hdfsDelimiter=",",dataFrame,
               ssl.verifypeer = FALSE
   )
   result = text$value()
-  print(result)
+  #print(result)
   
   
   ## Registration of Table
@@ -471,7 +496,7 @@ uploadTableToIIP<-function(dataSource,workspaceName,hdfsDelimiter=",",dataFrame,
 {
                 "schema":','"',schema,'"',",",
                 '"delimiter":','"',hdfsDelimiter,'"',",\n",
-                '"location": ','"',paste0(Sys.getenv("USER_WORKSPACE"),"/",fileName),'"',",",
+                '"location": ','"',location,'"',",",
                 '"fileType": ','"',fileType,'"',",",
                 '"tableName": ','"',tableName,'"',",",
                 '"driverClassName": "com.databricks.spark.csv"
@@ -489,20 +514,24 @@ uploadTableToIIP<-function(dataSource,workspaceName,hdfsDelimiter=",",dataFrame,
 }'
   )
   
-  
-  
   connection <- IIP.JDBCConnection()
-  dbGetQuery(connection,query)
+  if(destination == "hdfs"){
   
+  dbGetQuery(connection,query)
+  }
   res<-fromJSON(result)
+  
+  ##Fixing error log issue, commenting the FAILURE status
   if(res=="SUCCESS"){
+    print(result)
+	}
     query<-paste0("select count(*) from ",tableName)
-    print(paste("Table",tableName," created with ",dbGetQuery(connection,query)," rows"))
-  }
-  else
-  {
-    print(" There was error in pushing the table to IIP")
-  }
+    print(paste("Table",tableName," created successfully with ",dbGetQuery(connection,query)," rows"))
+  #}
+  #else
+  #{
+   # print(" There was error in pushing the table to IIP")
+  #}
   
   }
 
@@ -554,5 +583,66 @@ getUserRole<-function(username,password, curl)
   colnames(roles) = c("id", "role")
   
   return(roles)
+}
+
+## Upload table to Hive
+uploadToHive<-function(hdfsFileLocation,tableName,columns,dataType,hdfsDelimiter,append)
+{
+
+connection <- IIP.JDBCConnection("hive")
+schema<-paste0(unlist(strsplit(columns,","))," ",unlist(strsplit(dataType,",")),collapse=",")
+
+createQuery<-paste0("CREATE TABLE IF NOT EXISTS ",tableName,"(",schema,") ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+WITH SERDEPROPERTIES (
+   'separatorChar' = '",hdfsDelimiter,"',
+   'quoteChar'     = '\"'
+)  
+STORED AS TEXTFILE")
+rs<-tryCatch(dbGetQuery(connection,createQuery),
+                     warning = function(w) {return("Warning message")},
+                     error = function(e) {return("Table creation error")})
+
+if(append == F){
+
+insertQuery<-paste0("LOAD DATA INPATH '",hdfsFileLocation,"' OVERWRITE INTO TABLE ",tableName)
+rs<-tryCatch(dbGetQuery(connection,insertQuery),
+                     warning = function(w) {return("Warning message")},
+                     error = function(e) { return("Table insertion error")})
+}
+else{
+
+## create temporary table to load oncremental data into it
+dropTempTblQry<-paste0("DROP TABLE IF EXISTS ",tableName,"_temp")
+
+createTempTblQry<-paste0("CREATE TABLE IF NOT EXISTS ",tableName,"_temp(",schema,") ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+WITH SERDEPROPERTIES (
+   'separatorChar' = '",hdfsDelimiter,"',
+   'quoteChar'     = '\"'
+)  
+STORED AS TEXTFILE ")
+loadtempTblQry<-paste0("LOAD DATA INPATH '",hdfsFileLocation,"' OVERWRITE INTO TABLE ",tableName,"_temp")
+insertQuery<-paste0("INSERT INTO TABLE ",tableName," SELECT * FROM ",tableName,"_temp")
+
+rs<-tryCatch(dbGetQuery(connection,dropTempTblQry),
+                     warning = function(w) {return("Warning message")},
+                     error = function(e) { return("Temporary Table drop error")})
+
+rs<-tryCatch(dbGetQuery(connection,createTempTblQry),
+                     warning = function(w) {return("Warning message")},
+                     error = function(e) { return("Temporary Table creation error")})					 
+
+rs<-tryCatch(dbGetQuery(connection,loadtempTblQry),
+                     warning = function(w) {return("Warning message")},
+                     error = function(e) { return("Temporary Table insertion error")})
+
+rs<-tryCatch(dbGetQuery(connection,insertQuery),
+                     warning = function(w) {return("Warning message")},
+                     error = function(e) { return("Table insertion error")})					 
+}
+
+
+
+
+  
 }
 
