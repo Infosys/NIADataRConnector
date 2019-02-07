@@ -1,14 +1,14 @@
-\name{IIP.uploadTable}
-\alias{IIP.uploadTable}
+\name{IIP.uploadTableToHive}
+\alias{IIP.uploadTableToHive}
 
 \title{
-Upload the data frame to IIP
+Upload the data frame to IIP as a Hive Table
 }
 \description{
-Upload the given data frame to a table in a workspace in IIP using IIP webservice
+upload the given data frame to a table in a workspace in IIP as a Hive Table using IIP webservice
 }
 \usage{
-IIP.uploadTable(dataSource, workspaceName, hdfsDelimiter = ",", dataFrame, tableName, fileType = "csv", append = F, role)
+IIP.uploadTableToHive(dataSource, workspaceName, hdfsDelimiter = ",", dataFrame, tableName, fileType, append = F, role)
 }
 
 \arguments{
@@ -40,7 +40,7 @@ user role
 }
 }
 \details{
-
+Created Managed Hive Tables
 }
 \value{
 
@@ -49,8 +49,7 @@ user role
 
 }
 \author{
-KiranKumar_Kaipa@infosys.com
-Poorva_Agrawal@infosys.com
+Divya_VN@infosys.com
 Raghavi_T01@infosys.com
 }
 \note{
@@ -63,6 +62,6 @@ Raghavi_T01@infosys.com
 
 }
 \examples{
-#IIP.uploadTable(dataSource="DataSourceName", workspaceName="WorkspaceName", hdfsDelimiter = ",", dataFrame=DataFrameObject, tableName="TableName", fileType = "csv", append = F, role ="admin")
+#IIP.uploadTableToHive(dataSource="DataSourceName", workspaceName="WorkspaceName", hdfsDelimiter = ",", dataFrame=DataFrameObject, tableName="TableName", fileType = "csv", append = F, role ="admin")
 
 }

@@ -45,4 +45,3 @@ Poorva_Agrawal@infosys.com
 #copyToLocal(tableName="TableName", dataSource="DataSourceName", workspaceName="WorkspaceName")
 
 }
-

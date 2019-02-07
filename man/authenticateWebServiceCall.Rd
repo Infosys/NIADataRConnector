@@ -1,47 +1,29 @@
 \name{authenticateWebServiceCall}
-\alias{authenticateWebServiceCall}
-
-\title{
-Authenticate with the rest webservice
+\alias{
+authenticateWebServiceCall
 }
-\description{
-THis function autheticate with the REST webservice and in turn returns a curl handle for subsequent calls
+\title{
+Function to login to Nia Data
+}
+\description{CAS based Authentication
 }
 \usage{
-authenticateWebServiceCall(username, password)
+authenticateWebServiceCall(username, type)
 }
-
 \arguments{
   \item{username}{
-Login username
-}
-  \item{password}{
-Login password
-}
-}
-\details{
-
+	Nia authentication credential
+	}
+  \item{type}{
+	Type of Request (POST by default)
+	}
 }
 \value{
-
-}
-\references{
-
+No return value. Sets Cookie in the RCurl object.
 }
 \author{
-KiranKumar_Kaipa@infosys.com
-Poorva_Agrawal@infosys.com
-Prasanna_Teli@infosys.com
-}
-\note{
-
-}
-
-
-
-\seealso{
-
+Raghavi_T01@infosys.com
 }
 \examples{
-# authenticateWebServiceCall(username,password)
+#authenticateWebServiceCall(username = "nia-user", type = "POST")
 }

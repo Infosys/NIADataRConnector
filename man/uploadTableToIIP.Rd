@@ -8,7 +8,7 @@ Upload the data frame to IIP
 upload the given data frame to a table in a workspace in IIP using IIP webservice
 }
 \usage{
-uploadTableToIIP(dataSource, workspaceName, hdfsDelimiter = ",", dataFrame, tableName, fileType = "csv", role)
+uploadTableToIIP(dataSource, workspaceName, hdfsDelimiter = ",", dataFrame, tableName, fileType = "csv", role, destination, append)
 }
 
 \arguments{
@@ -36,6 +36,8 @@ name of the table to be uploaded
  \item{role}{
 user role
 }
+  \item{destination}{destination as hive or hdfs}
+  \item{append}{boolean}
 }
 \details{
 
@@ -49,6 +51,7 @@ user role
 \author{
 KiranKumar_Kaipa@infosys.com
 Poorva_Agrawal@infosys.com
+Raghavi_T01@infosys.com
 }
 \note{
 

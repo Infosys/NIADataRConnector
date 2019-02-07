@@ -64,7 +64,7 @@ Poorva_Agrawal@infosys.com
 }
 \examples{
 
-"createUploadTableJson(dataSource=\"DataSourceName\", workspaceName=\"WorkspaceName\", columns=c(\"Column1,Column2,Column3\"), dataType=c(\"String,String,String\"), hdfsDelimiter=\",\", filepath=\"FilePath\", tableName=\"TableName\", fileType=\"csv\", role = \"admin\")"
+#"createUploadTableJson(dataSource=\"DataSourceName\", workspaceName=\"WorkspaceName\", columns=c(\"Column1,Column2,Column3\"), dataType=c(\"String,String,String\"), hdfsDelimiter=\",\", filepath=\"FilePath\", tableName=\"TableName\", fileType=\"csv\", role = \"admin\")"
 
 }
 

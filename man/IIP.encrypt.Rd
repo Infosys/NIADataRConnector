@@ -8,13 +8,13 @@ Encrypt passwords
 Function to encrypt passwords using IIP jar
 }
 \usage{
-IIP.encrypt(password)
+IIP.encrypt(pwd = NULL, pwdFile = NULL, encryptedFilePath = NULL)
 }
 
 \arguments{
-  \item{password}{
-Plaintext Original Password
-}
+  \item{pwd}{Plaintext Original Password}
+  \item{pwdFile}{PlainText password file}
+  \item{encryptedFilePath}{Excrypted password file}
 }
 \details{
 
@@ -36,6 +36,6 @@ poorva_agrawal@infosys.com, Prasanna_Teli@infosys.com
 
 }
 \examples{
-#IIP.encrypt(password)
+#IIP.encrypt(pwd = password)
 }
 

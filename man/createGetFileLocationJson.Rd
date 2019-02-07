@@ -50,4 +50,3 @@ Poorva_Agrawal@infosys.com
 #createGetFileLocationJson(tableName="tableName", dataSource="dataSource", workspaceName="workspaceName")
 
 }
-

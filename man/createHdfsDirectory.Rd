@@ -43,6 +43,5 @@ Poorva_Agrawal@infosys.com
 }
 \examples{
 
-createHdfsDirectory("/user/workspace/", "test")
+#createHdfsDirectory("/user/workspace/", "test")
 }
-
