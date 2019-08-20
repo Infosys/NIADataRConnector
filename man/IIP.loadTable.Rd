@@ -41,7 +41,7 @@ user role
 }
 }
 \details{
-
+Creates External Hive Tables
 }
 \value{
 
@@ -52,6 +52,7 @@ user role
 \author{
 KiranKumar_Kaipa@infosys.com
 Poorva_Agrawal@infosys.com
+Raghavi_T01@infosys.com
 }
 \note{
 

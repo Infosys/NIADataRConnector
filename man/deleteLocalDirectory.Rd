@@ -39,6 +39,6 @@ Poorva_Agrawal@infosys.com
 \seealso{
 }
 \examples{
-deleteLocalDirectory("/test")
+#deleteLocalDirectory("/test")
 
 }

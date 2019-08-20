@@ -8,13 +8,13 @@ Decrypt password
 Utility to decrypt the encrypted password using IIP jar
 }
 \usage{
-IIP.decrypt(encryptedPWD)
+IIP.decrypt(encryptedPwdFile, privateKeyFile)
 }
 
 \arguments{
-  \item{encryptedPWD}{
-The encrypted password
-}
+  \item{encryptedPwdFile}{absolute path of encrypted password file}
+  \item{privateKeyFile}{absolute path of private key file}
+
 }
 \details{
 
@@ -37,6 +37,6 @@ poorva_agrawal@infosys.com, Prasanna_Teli@infosys.com
 
 }
 \examples{
-#IIP.decrypt(encryptedPwd)
+#IIP.decrypt(encryptedPwdFile, privateKeyFile)
 
 }
