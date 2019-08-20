@@ -1,4 +1,3 @@
-
 # (c) 2017 Infosys Limited. All rights reserved.
 #  Except for any free or open source software  components embedded in this Infosys
 #  Proprietary software program("Program"), this Program is  protected by copyright
@@ -15,7 +14,17 @@
 #                     - encrpyt - Password is encrypted and is stored in file
 IIP.init<-function(username,password = NULL, encrypted = F)
 {
-  
+
+  hadoop_user_name = Sys.getenv("USER")
+  if(hadoop_user_name == "" || is.null(hadoop_user_name)) {
+    hadoop_user_name = username
+  }
+  if(Sys.getenv("CONVERT_LOGINUSER_TO_UPPERCASE") == "T") {
+    service.accounts = unlist(strsplit(Sys.getenv("USERS_EXEMPT_FOR_CONVERSION"), split = ","))
+    if(!(hadoop_user_name %in% service.accounts)) {
+      hadoop_user_name = toupper(hadoop_user_name)
+    }
+  }
   library(rhdfs)
   hdfs.init()
   library(RCurl)
