@@ -323,6 +323,15 @@ IIP.uploadTable<-function(dataSource,workspaceName,hdfsDelimiter=",",dataFrame,t
   }
 }
 
+
+addRangerPolicy <- function(tableName, userName, roleName) {
+  inputJson = paste0('{"policyName": "policy-', tableName,'","databases": "default","tables": "',tableName,'","columns": "*","udfs": "","description": "Hive Policy","repositoryName": "',Sys.getenv("RANGER_HIVE_REPOSITORY"),'","repositoryType": "',Sys.getenv("RANGER_HIVE_REPOSITORY_TYPE"),'","tableType": "Exclusion","columnType": "Inclusion","isEnabled": true,"isAuditEnabled": true,"permMapList": [{"groupList": ["',roleName,'"],"userList": ["',userName,'"],"permList": ["select","update"]}]}')
+  curl.command = paste0('curl -iv -u ',Sys.getenv("RANGER_CREDENTIALS"),' -d \'',inputJson,'\' -H "Content-Type: application/json" ', Sys.getenv("RANGER_POLICY_URL"))
+  system(curl.command, ignore.stdout = TRUE, ignore.stderr = TRUE)
+}
+
+
+
 IIP.uploadTableToHive<-function(dataSource,workspaceName,hdfsDelimiter=",",dataFrame,tableName, fileType, append = F, role)
 {
   uploadTableToIIP(dataSource,workspaceName,hdfsDelimiter,dataFrame,tableName, fileType , role,destination="hive",append)
@@ -363,6 +372,9 @@ uploadTableToIIP<-function(dataSource,workspaceName,hdfsDelimiter=",",dataFrame,
   # Uploading to hive in default database.
   location<-paste0(Sys.getenv("USER_WORKSPACE"),"/",fileName)
   if(destination == "hive"){
+    if(Sys.getenv("RANGER_POLICY_URL") != "" || !is.null(Sys.getenv("RANGER_POLICY_URL"))) {
+      addRangerPolicy(tableName = tableName, userName = Sys.getenv("USERNAME"), roleName = role)
+    }
     createHdfsDirectory(paste0(Sys.getenv("HADOOP_ADLS"),Sys.getenv("USER_WORKSPACE"),"/"),tableName)
     hdfsFileLocation<-paste0(Sys.getenv("HADOOP_ADLS"),Sys.getenv("USER_WORKSPACE"),"/",tableName,"/")
     #uploadToHDFS(localFileLocation,hdfsFileLocation)
@@ -370,10 +382,10 @@ uploadTableToIIP<-function(dataSource,workspaceName,hdfsDelimiter=",",dataFrame,
     uploadToHive(hdfsFileLocation,tableName,columns,dataType,hdfsDelimiter,append)
     location<-paste0(Sys.getenv("HADOOP_ADLS"),Sys.getenv("HIVE_WAREHOUSE"),"/",tolower(tableName))
     fileType<-"hive"
-  
-  
- 
-  
+    
+    
+    
+    
     tableName<-paste0('default.',tableName)
     json<-createUploadTableJson(dataSource,workspaceName,columns,dataType,hdfsDelimiter, location,tableName, "hive", id)
   }
@@ -403,7 +415,7 @@ uploadTableToIIP<-function(dataSource,workspaceName,hdfsDelimiter=",",dataFrame,
   result = text$value()
   res = ""
   tryCatch(expr = {res<-fromJSON(result)}, error = function(e){res<-result})
-
+  
   ##Fixing error log issue, commenting the FAILURE status
   if(res=="SUCCESS"){
     print(result)
